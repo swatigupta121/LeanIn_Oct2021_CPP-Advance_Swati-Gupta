@@ -1,86 +1,56 @@
-#include <conio.h>
-#include <graphics.h>
-#include <stdio.h>
-  
-// Driver Code
-int main()
+#include<graphics.h>
+#include<conio.h>
+#include<stdio.h>
+#include<ctime>
+#include<math.h>
+#define PI 3.14
+main()
 {
-    int gd = DETECT, gm;
-  
-    // Initialize of gdriver
-    initgraph(&gd, &gm, "C:\\"
-                        "turboc3\\bgi");
-  
-    // Clock Outer Outline
-    rectangle(500, 50, 800, 650);
-  
-    // Clock Inner Outline
-    rectangle(520, 70, 780, 630);
-  
-    // Coloring Middle Part Of
-    // Rectangle With Brown
-    setfillstyle(SOLID_FILL, BROWN);
-    floodfill(505, 55, 15);
-  
-    // Clock Outline
-    circle(650, 200, 130);
-    circle(650, 200, 3);
-  
-    // Coloring all the parts Of the
-    // clock except the circle with
-    // Darkgray
-    setfillstyle(SOLID_FILL, DARKGRAY);
-    floodfill(525, 355, 15);
-    floodfill(522, 72, 15);
-    floodfill(768, 72, 15);
-  
-    // Inserting Digits
-    settextstyle(6, 0, 3);
-    outtextxy(697, 100, "01");
-    outtextxy(730, 140, "02");
-    outtextxy(742, 190, "03");
-    outtextxy(721, 240, "04");
-    outtextxy(690, 280, "05");
-    outtextxy(630, 300, "06");
-    outtextxy(578, 280, "07");
-    outtextxy(540, 240, "08");
-    outtextxy(530, 190, "09");
-    outtextxy(537, 140, "10");
-    outtextxy(569, 100, "11");
-    outtextxy(630, 80, "12");
-  
-    // Left Line Of Pendulum
-    line(645, 328, 645, 528);
-  
-    // Right Line Of Pendulum
-    line(655, 328, 655, 528);
-  
-    // Pendulum Bob
-    circle(650, 546, 20);
-  
-    // Coloring Line & Bob With Black
-    setfillstyle(SOLID_FILL, BLACK);
-    floodfill(652, 544, 15);
-    floodfill(647, 330, 15);
-  
-    // Creating the Hour Hand
-    // & Color Blue
-    setcolor(BLUE);
-    line(647, 197, 600, 170);
-  
-    // Creating Minute Hand
-    // & Color Yellow
-    setcolor(YELLOW);
-    line(653, 200, 730, 170);
-  
-    // Creating Second Hand and the
-    // Color Red
-    setcolor(RED);
-    line(650, 203, 630, 290);
-  
-    // Hold the screen for a while
-    getch();
-  
-    // Close the initialized gdriver
-    closegraph();
+	initwindow(1000,700,"ANALOG CLOCK");
+	char *a[13]={"","1","2","3","4","5","6","7","8","9","10","11","12"};
+
+		time_t rawtime;
+	
+	struct tm* currenttime;
+		
+	
+	while(1)
+	{
+		setcolor(5);
+		settextstyle(0,0,4);
+		circle(400,400,237);
+	
+	for(int i=1;i<=12;i++)
+	{
+		setcolor(5);
+		settextstyle(0,0,2);
+		outtextxy(400+215*sin(i*PI/6),400-215*cos(i*PI/6),a[i]);
+	}
+		
+		rawtime=time(0);      //with 0 or null return laptop time
+		currenttime=localtime(&rawtime);
+		
+		setcolor(3);
+		settextstyle(3,0,7);
+		outtextxy(190,70,"ANALOG CLOCK");
+		
+		
+		setcolor(GREEN);
+		setlinestyle(0,0,4);
+		line(400,400,400+110*sin(currenttime->tm_hour *PI/6),400-110*cos(currenttime->tm_hour*PI/6));
+		
+		setcolor(GREEN);
+		setlinestyle(0,0,3);
+		line(400,400,400+170*sin(currenttime->tm_min *PI/30), 400-170*cos(currenttime->tm_min *PI/30));
+		
+		setcolor(GREEN);
+		setlinestyle(0,0,1);
+		line(400,400,400+160*sin(currenttime->tm_sec*PI/30),400-160*cos(currenttime->tm_sec*PI/30));
+
+	 	delay(1000);
+	 	cleardevice();
+	}
+	getch();
+	closegraph();
+	
 }
